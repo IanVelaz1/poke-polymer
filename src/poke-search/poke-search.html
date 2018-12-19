@@ -10,40 +10,34 @@
         
        </style>
        <h3>PokeDex</h3>
-        <form action="" on-submit="buscar">
-                <paper-input label="Busqueda" value="{{pokemon.name}}"></paper-input>
-        </form>
+          <paper-input label="Busqueda" value="{{searchName}}" on-keyup="searchPokemon"></paper-input>
   </template>
   
 
   <script>
     class PokeSearch extends Polymer.Element{
+    
        static get is(){
            return 'poke-search'
        }
        
        static get properties(){
            return {
-              pokemon:{
-                type:Object,
-                readOnly:true,
-                value:function(){
-                  return{
-                    name:""
-                  }
-                }
+              searchName:{
+                type:String,
+                value:""
               }
            }
        }
 
-      /////crear un nuevo custom element
-       buscar(event){
-         event.preventDefault();
-         console.log(this.shadowRoot.querySelector("#inputBusqueda").value);
-         let search=this.shadowRoot.querySelector('#inputBusqueda').value
-         this.dispatchEvent(new CustomEvent('buscar',{detail:{search}}))
-         
-       }
+      searchPokemon(event){
+        this.dispatchEvent(new CustomEvent("pokemon-search",{
+          bubbles:false,
+          composed:false,
+          detail:this.searchName
+        }))
+        
+      }
 
       
 

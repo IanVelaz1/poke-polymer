@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../pokedex-card/pokedex-card.html">
+
+<dom-module id="poke-list">
+ <template>
+     <style>
+         :host{
+             display: inline-block;
+         }
+     </style>
+     <template is="dom-repeat" items="[[pokemonArray]]" as="pokemon" filter="{{_filterPokemon(filterPokemon)}}">
+            <pokedex-card pokemon="{{pokemon}}" on-click="capturePokemon"></pokedex-card>
+     </template>
+ </template>
+ <script>
+   class PokeList extends Polymer.Element{
+       static get is(){return "poke-list"}
+       static get properties(){
+           return{
+            pokemonArray:{
+                type:Array,
+                value: function (){
+                    return []
+                }
+            },
+            filterPokemon:{
+                type:String,
+                value:""
+            }
+            
+           }
+           
+       }
+
+       capturePokemon(event){
+          event.model.set("pokemon.captured",!event.model.pokemon.captured);
+          console.table(event.model.pokemon);
+          
+       }
+
+       _changeFilter() {
+           console.log('filter', this.filterPokemon)
+       }
+
+       _filterPokemon(filterPokemon){
+           if (!filterPokemon)
+            return null
+            return function (pokemon) {
+                return pokemon.name.includes(filterPokemon);
+            }
+         
+       }
+
+
+   }
+  window.customElements.define(PokeList.is,PokeList)
+ </script>
+</dom-module>

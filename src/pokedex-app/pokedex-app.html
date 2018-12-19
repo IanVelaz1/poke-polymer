@@ -1,7 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../pokedex-card/pokedex-card.html">
-<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
-
+<link rel="import" href="../poke-search/poke-search.html">
+<link rel="import" href="../poke-list/poke-list.html">
 
 <dom-module id="pokedex-app">
   <template>
@@ -15,10 +14,8 @@
       
 
     </style>
-    <poke-search on-buscar="buscarPoke"></poke-search>
-    <template is="dom-repeat" items="{{pokemonArray}}" as="pokemon">
-      <pokedex-card pokemon="{{pokemon}}"></pokedex-card>
-    </template>
+    <poke-search on-pokemon-search="searchPokemon"></poke-search>
+    <poke-list pokemon-array="[[pokemonArray]]" filter-pokemon="[[searchName]]"></poke-list>
     
     
   </template>
@@ -34,7 +31,7 @@
         return {
           pokemonArray:{
                 type:Array,
-                value (){
+                value : function () {
                   return[
                     {name:"charizard",url:"https://assets.pokemon.com/assets/cms2/img/pokedex/full/006_f3.png",captured:false,
                     battles:["W","L","W","L","W","W"],
@@ -46,11 +43,19 @@
                   
                 }
 
+              },
+              searchName:{
+                type:String,
+                value:"",
+                notify: true
               }
         };
       }
-      buscarPoke(event){
-        console.log(event);
+
+
+      searchPokemon(event){
+        this.set("searchName", event.detail)
+        
         
       }
 

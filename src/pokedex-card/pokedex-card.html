@@ -1,6 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../poke-label/poke-label.html">
-<link rel="import" href="../poke-search/poke-search.html">
 <link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 
 <dom-module id="pokedex-card">
@@ -23,11 +22,11 @@
                 }
                </style>
       <article id="container"  style$="background-color: [[colorType]]">
-            <img src="[[pokemon.url]]" alt="[[pokemon.name]]"  on-click="changeCapturedState">
-            <template is="dom-if" if="{{!capturedPoke}}">
+            <img src="[[pokemon.url]]" alt="[[pokemon.name]]" >
+            <template is="dom-if" if="{{!pokemon.captured}}">
                 <poke-label nombre="[[pokemon.name]]" ></poke-label>
             </template>
-            <template is="dom-if" if="{{capturedPoke}}">
+            <template is="dom-if" if="{{pokemon.captured}}">
                 <poke-label nombre="[[pokemon.name]] (Capturado)"></poke-label>
             </template>
             <poke-label nombre="[[battlesWon]]"></poke-label>
@@ -60,11 +59,8 @@
               battlesWon:{
                 type:String,
                 computed:"_battleResults(pokemon)"
-              },
-              capturedPoke:{
-                  type:Boolean,
-                  value:false
-              },colorType:{
+              }
+              ,colorType:{
                   type:String,
                   computed:"_assignColor(pokemon)"
               }
@@ -81,22 +77,14 @@
          }
 
          _battleResults(pokemon){
-            let arrayBattles=pokemon.battles.filter((fights)=>fights=="W");
+            let arrayBattles=pokemon.battles.filter((fights)=>fights==="W");
             console.log(arrayBattles);
             let winBattles=arrayBattles.length;
             return `Batallas ganadas ${winBattles} de ${pokemon.battles.length}`
             
          }
 
-         _capturedPokemon(pokemon){
-             return pokemon.captured;
-         }
 
-         changeCapturedState(){
-             this.set("pokemon.captured",!this.pokemon.captured);
-             this.capturedPoke=this.get("pokemon.captured");
-             
-         }
 
          _assignColor(pokemon){
              let color="";
