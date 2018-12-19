@@ -1,0 +1,6 @@
+{
+  "name": "pokedex",
+  "short_name": "pokedex",
+  "start_url": "/",
+  "display": "standalone"
+}

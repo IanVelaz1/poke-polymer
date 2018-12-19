@@ -1,0 +1,56 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<dom-module id="poke-search">
+  <template>
+       <style>
+        :host{
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+       </style>
+       <h3>PokeDex</h3>
+        <form action="" on-submit="buscar">
+                <paper-input label="Busqueda" value="{{pokemon.name}}"></paper-input>
+        </form>
+  </template>
+  
+
+  <script>
+    class PokeSearch extends Polymer.Element{
+       static get is(){
+           return 'poke-search'
+       }
+       
+       static get properties(){
+           return {
+              pokemon:{
+                type:Object,
+                readOnly:true,
+                value:function(){
+                  return{
+                    name:""
+                  }
+                }
+              }
+           }
+       }
+
+      /////crear un nuevo custom element
+       buscar(event){
+         event.preventDefault();
+         console.log(this.shadowRoot.querySelector("#inputBusqueda").value);
+         let search=this.shadowRoot.querySelector('#inputBusqueda').value
+         this.dispatchEvent(new CustomEvent('buscar',{detail:{search}}))
+         
+       }
+
+      
+
+    }
+
+    window.customElements.define(PokeSearch.is,PokeSearch);
+
+  </script>
+
+</dom-module>

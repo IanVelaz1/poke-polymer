@@ -1,0 +1,63 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../pokedex-card/pokedex-card.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+
+<dom-module id="pokedex-app">
+  <template>
+    <style>
+      :host{
+        display: block;
+        --paper-input-container-focus-color: green;
+        --font-size-pokelabel:160%;
+        --paper-input-container-input-color:red;
+      }
+      
+
+    </style>
+    <poke-search on-buscar="buscarPoke"></poke-search>
+    <template is="dom-repeat" items="{{pokemonArray}}" as="pokemon">
+      <pokedex-card pokemon="{{pokemon}}"></pokedex-card>
+    </template>
+    
+    
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class PokedexApp extends Polymer.Element {
+      static get is() { return 'pokedex-app'; }
+      static get properties() {
+        return {
+          pokemonArray:{
+                type:Array,
+                value (){
+                  return[
+                    {name:"charizard",url:"https://assets.pokemon.com/assets/cms2/img/pokedex/full/006_f3.png",captured:false,
+                    battles:["W","L","W","L","W","W"],
+                    type:"fire"},
+                    {name:"bulbasaur",url:"http://www.pokemonget.eu/shop/155-large_default/bulbasaur-6-ivs-shiny.jpg",captured:false,
+                    battles:["W","W","W","W","W","W"],
+                    type:"plant"}
+                  ]
+                  
+                }
+
+              }
+        };
+      }
+      buscarPoke(event){
+        console.log(event);
+        
+      }
+
+      
+      
+    }
+
+    window.customElements.define(PokedexApp.is, PokedexApp);
+  </script>
+</dom-module>

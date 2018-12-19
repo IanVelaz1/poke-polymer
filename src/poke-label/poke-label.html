@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components//polymer/polymer-element.html">
+
+
+<dom-module id="poke-label">
+  <template>
+      <style>
+        :host{display: block;}
+        p{
+            
+            color: white;
+            font-size: var(--font-size-pokelabel,110%);
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+      </style>
+      <p>[[nombre]]</p>
+  </template>
+  <script>
+    class PokeLabel extends Polymer.Element{
+        static get is(){
+            return "poke-label";
+        }
+        
+        static get properties(){
+            return {
+             nombre:String
+            }
+        }
+    }
+
+    window.customElements.define(PokeLabel.is,PokeLabel);
+
+  </script>
+</dom-module>
