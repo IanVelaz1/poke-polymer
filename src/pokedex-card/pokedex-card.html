@@ -78,7 +78,7 @@
 
          _battleResults(pokemon){
             let arrayBattles=pokemon.battles.filter((fights)=>fights==="W");
-            console.log(arrayBattles);
+           
             let winBattles=arrayBattles.length;
             return `Batallas ganadas ${winBattles} de ${pokemon.battles.length}`
             
@@ -100,7 +100,7 @@
 
          fight(){
              let random=Math.floor(Math.random()*(100-0)+0);
-             console.log(random);
+             
              if(random>=0||random<=50){
                  this.push("pokemon.battles","L");
              }else{

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>pokedex-card test</title>
+
+    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../src/poke-search/poke-search.html">
+  </head>
+  <body>
+
+    <test-fixture id="check-event-fired">
+      <template>
+        <poke-search></poke-search>
+      </template>
+    </test-fixture>
+
+
+    <script>
+      suite('poke-search', function() {
+
+        test('set pokemon name works', function() {
+
+            var element=fixture("check-event-fired");
+            element.addEventListener("pokemon-search",function(event){
+               assert.equal(event.detail.searchName,"equis");
+               done()
+            });
+            element.searchName="equis"
+        });
+
+      });
+    </script>
+
+
+  </body>
+</html>
