@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<dom-module id="poke-add">
+    <template>
+        <style>
+        </style>
+        <iron-ajax id="pokeRequest" 
+        auto method="post" 
+        url="http://localhost:3000/pokemonArray" 
+        body='{"pokemon":"{{pokemon}}"}'
+        handle-as="json" 
+        content-type="application/json" 
+        on-response="_addedPokemon">
+
+        </iron-ajax>
+        <paper-input label="Nombre Pokemon" value="{{pokemon.name}}"></paper-input>
+        <paper-input label="Imagen Pokemon" value="{{pokemon.url}}"></paper-input>
+        <paper-input label="TIpo de Pokemon" value="{{pokemon.type}}"></paper-input>
+        <button on-click="addPokemon">Agregar pokemon</button>
+    </template>
+    <script>
+        class PokeAdd extends Polymer.Element {
+            static get is() {
+                return "poke-add"
+            }
+
+            static get properties() {
+                return {
+                    pokemon: {
+                        Type: Object,
+                        value() {
+                            return {
+                                name: "",
+                                url: "",
+                                captured: false,
+                                battles: [],
+                                type: ""
+                            }
+                        }
+                    }
+                }
+            }
+
+            addPokemon() {
+                this.$.pokeRequest.generateRequest();
+            }
+
+            _addedPokemon() {
+                let response = this.$.pokeRequest.lastResponse();
+                console.log(response);
+
+            }
+
+        }
+
+        window.customElements.define(PokeAdd.is, PokeAdd)
+    </script>
+</dom-module>

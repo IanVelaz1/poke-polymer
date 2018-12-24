@@ -1,23 +1,32 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/promise-polyfill/promise-polyfill-lite.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../poke-search/poke-search.html">
 <link rel="import" href="../poke-list/poke-list.html">
+<link rel="import" href="../poke-add/poke-add.html">
 
 <dom-module id="pokedex-app">
   <template>
     <style>
-      :host{
+      :host {
         display: block;
         --paper-input-container-focus-color: green;
-        --font-size-pokelabel:160%;
-        --paper-input-container-input-color:red;
+        --font-size-pokelabel: 160%;
+        --paper-input-container-input-color: red;
       }
-      
-
     </style>
+    <iron-ajax 
+    auto
+    url="http://localhost:3000/pokemonArray"
+    handle-as="json"
+    on-response="pokemonsRecieved"
+    debounce-duration ="300"
+    ></iron-ajax>
     <poke-search on-pokemon-search="searchPokemon"></poke-search>
     <poke-list pokemon-array="[[pokemonArray]]" filter-pokemon="[[searchName]]"></poke-list>
+    <poke-add></poke-add>
     
-    
+
   </template>
 
   <script>
@@ -26,41 +35,55 @@
      * @polymer
      */
     class PokedexApp extends Polymer.Element {
-      static get is() { return 'pokedex-app'; }
+      static get is() {
+        return 'pokedex-app';
+      }
       static get properties() {
         return {
-          pokemonArray:{
-                type:Array,
-                value : function () {
-                  return[
-                    {name:"charizard",url:"https://assets.pokemon.com/assets/cms2/img/pokedex/full/006_f3.png",captured:false,
-                    battles:["W","L","W","L","W","W"],
-                    type:"fire"},
-                    {name:"bulbasaur",url:"http://www.pokemonget.eu/shop/155-large_default/bulbasaur-6-ivs-shiny.jpg",captured:false,
-                    battles:["W","W","W","W","W","W"],
-                    type:"plant"}
-                  ]
-                  
-                }
+          pokemonArray: {
+            type: Array,
+            value: function () {
+              return [
 
-              },
-              searchName:{
-                type:String,
-                value:"",
-                notify: true
-              }
+              ]
+
+            }
+
+          },
+          searchName: {
+            type: String,
+            value: "",
+            notify: true
+          }
         };
       }
 
+    
+      // ready() {
+      //   super.ready();
+      //   fetch("http://localhost:3000/pokemonArray").then(response => response.json()).then(pokemon => {
+      //       console.log(pokemon)
+      //       this.pokemonArray = pokemon;
+      //     }
 
-      searchPokemon(event){
+      //   ).catch(error => console.log(error))
+      // }
+
+
+
+      pokemonsRecieved(event){
+         
+         this.set("pokemonArray",event.detail.response)
+       }
+
+      searchPokemon(event) {
         this.set("searchName", event.detail)
-        
-        
+
+  
       }
 
-      
-      
+
+
     }
 
     window.customElements.define(PokedexApp.is, PokedexApp);

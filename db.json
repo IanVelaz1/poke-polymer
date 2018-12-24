@@ -1,0 +1,14 @@
+{
+    "pokemonArray":[
+        {"name":"charizard",
+            "url":"https://assets.pokemon.com/assets/cms2/img/pokedex/full/006_f3.png",
+            "captured":false,
+            "battles":["W","L","W","L","W","W"],
+            "type":"fire"},
+            {"name":"bulbasaur",
+                "url":"http://www.pokemonget.eu/shop/155-large_default/bulbasaur-6-ivs-shiny.jpg",
+                "captured":false,
+            "battles":["W","W","W","W","W","W"],
+            "type":"plant"}
+    ]
+}
